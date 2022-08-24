@@ -1,0 +1,23 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  div {
+    img {
+      max-width: 350px;
+    }
+  }
+  div {
+    display: flex;
+    gap: 10px;
+  }
+  .description {
+    max-width: 800px;
+    text-align: center;
+    color: gray;
+  }
+}
