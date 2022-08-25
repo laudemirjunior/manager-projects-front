@@ -1,9 +1,12 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import Pen from "../../assets/pen.png";
 import Menu from "../../components/menu";
 import ModalConfirmeDelete from "../../components/modalConfirmeDelete";
 import ModalCreateTask from "../../components/modalCreateTask";
+import ModalEditProject from "../../components/modalEditProject";
+import { UseProject } from "../../context/project";
 import { UseTask } from "../../context/task";
 import "./styles.scss";
 
@@ -18,11 +21,15 @@ interface PropsDataTask {
 
 export default function Tasks() {
   const { id } = useParams();
-  const { projectName, tasks, getTasks, editTask } = UseTask();
+  const { projectName, tasks, getTasks, editTask, deleteTask } = UseTask();
   const [show, setShow] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
   const [newTasks, setNewTasks] = useState<PropsDataTask[]>([]);
+  const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
   const [params, setParams] = useState("Todos");
+  const { deleteProject } = UseProject();
+  const [showModalDeleteTask, setShowModalDeleteTask] =
+    useState<boolean>(false);
 
   const filterTasks = () => {
     if (params === "Todos") {
@@ -67,8 +74,15 @@ export default function Tasks() {
       <div className="container-tasks">
         <div>
           <div className="header">
-            <div>
+            <div className="name-project">
               <h2>{projectName}</h2>
+              <span
+                onClick={() => {
+                  setShowModalEdit(!showModalEdit);
+                }}
+              >
+                <img src={Pen} alt="pen" />
+              </span>
             </div>
             <div className="header-right">
               <h2>
@@ -137,18 +151,30 @@ export default function Tasks() {
                       editTask(item.id, { conclude: !item.conclude }, id || "")
                     }
                   />
-                  <div className="task-item">
+                  <div className={"task-item"}>
                     <p>{item.name}</p>
                     <p className="gray-item">@{item.responsible}</p>
                     <p className="gray-item">{String(newDate(item))}</p>
+                    <p
+                      className="button-delete"
+                      onClick={() => setShowModalDeleteTask(true)}
+                    >
+                      Delete task
+                    </p>
                   </div>
+                  <ModalConfirmeDelete
+                    show={showModalDeleteTask}
+                    setShow={setShowModalDeleteTask}
+                    id={item.id || ""}
+                    text="Tem certeza que deseja excluir esta task?"
+                    action={deleteTask}
+                  />
                 </div>
               );
             })
           ) : (
             <b className="zero-tasks">Ainda não existe tasks aqui!</b>
           )}
-
           <div className="task-more" onClick={() => setShow(true)}>
             <b>+ Add Task</b>
           </div>
@@ -158,6 +184,13 @@ export default function Tasks() {
       <ModalConfirmeDelete
         show={showModalDelete}
         setShow={setShowModalDelete}
+        id={id || ""}
+        text="Tem certeza que deseja excluir esse projeto?"
+        action={deleteProject}
+      />
+      <ModalEditProject
+        show={showModalEdit}
+        setShow={setShowModalEdit}
         id={id || ""}
       />
     </div>

@@ -1,4 +1,3 @@
-import { UseProject } from "../../context/project";
 import Button from "../button";
 import "./styles.scss";
 
@@ -6,13 +5,15 @@ export default function ModalConfirmeDelete({
   show,
   setShow,
   id,
+  text,
+  action,
 }: {
   show: boolean;
   setShow: (data: boolean) => void;
   id: string;
+  text: string;
+  action: (id: string) => void;
 }) {
-  const { deleteProject } = UseProject();
-
   return (
     <>
       {show && (
@@ -20,7 +21,7 @@ export default function ModalConfirmeDelete({
           <div className="modal">
             <h2>Conformar exclusão</h2>
             <div className="box">
-              <p>Tem certeza que deseja excluir esse projeto?</p>
+              <p>{text}</p>
             </div>
             <div className="buttons">
               <Button
@@ -33,7 +34,7 @@ export default function ModalConfirmeDelete({
                 name="Sim"
                 onClick={() => {
                   setShow(!show);
-                  deleteProject(id);
+                  action(id);
                 }}
               />
             </div>

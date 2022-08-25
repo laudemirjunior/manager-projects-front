@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import api from "../services";
 
@@ -79,10 +73,6 @@ const UserProvider = ({ children }: ProviderProps) => {
       .get("/user", headers)
       .then((res) => setUser(res.data.name))
       .catch((err) => alert(err));
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   const patchUser = () =>
     api

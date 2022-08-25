@@ -2,17 +2,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { UseProject } from "../../context/project";
+import { UseTask } from "../../context/task";
 import Button from "../button";
 import "./styles.scss";
 
-export default function ModalCreateProject({
+export default function ModalEditProject({
   show,
   setShow,
+  id,
 }: {
   show: boolean;
   setShow: (data: boolean) => void;
+  id: string;
 }) {
-  const { createProject } = UseProject();
+  const { editProject } = UseProject();
+  const { getTasks } = UseTask();
 
   const Schema = yup.object().shape({
     name: yup.string().required("Nome obrigatório"),
@@ -28,7 +32,8 @@ export default function ModalCreateProject({
   });
 
   async function onSubmitFunction(data: { name: string }) {
-    await createProject(data.name);
+    await editProject(data.name, id);
+    await getTasks(id || "");
     reset();
     setShow(false);
   }
@@ -41,7 +46,7 @@ export default function ModalCreateProject({
           onSubmit={handleSubmit(onSubmitFunction as () => Promise<void>)}
         >
           <div className="modal">
-            <h2>Criar</h2>
+            <h2>Editar</h2>
             <div className="box">
               <label>Nome</label>
               <input
@@ -60,7 +65,7 @@ export default function ModalCreateProject({
                   setShow(!show);
                 }}
               />
-              <Button name="Criar" type="submit" />
+              <Button name="Editar" type="submit" />
             </div>
           </div>
         </form>

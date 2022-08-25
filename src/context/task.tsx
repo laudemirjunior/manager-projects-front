@@ -32,6 +32,7 @@ interface DataTaskContext {
     data: { conclude: boolean },
     idProject: string
   ) => void;
+  deleteTask: (id: string) => void;
 }
 
 const TaskContext = createContext<DataTaskContext>({} as DataTaskContext);
@@ -55,6 +56,14 @@ const TaskProvider = ({ children }: ProviderProps) => {
       .then((res) => {})
       .catch((err) => alert(err));
 
+  const deleteTask = (id: string) =>
+    api
+      .delete(`/task/${id}`, headers)
+      .then((res) =>
+        setTasks(tasks.filter((item: PropsDataTask) => item.id !== id))
+      )
+      .catch((err) => alert(err));
+
   const editTask = (
     id: string,
     data: { conclude: boolean },
@@ -69,7 +78,7 @@ const TaskProvider = ({ children }: ProviderProps) => {
 
   return (
     <TaskContext.Provider
-      value={{ getTasks, tasks, projectName, createTask, editTask }}
+      value={{ getTasks, tasks, projectName, createTask, editTask, deleteTask }}
     >
       {children}
     </TaskContext.Provider>

@@ -58,7 +58,7 @@ export default function ModalCreateTask({
           onSubmit={handleSubmit(onSubmitFunction as () => Promise<void>)}
         >
           <div className="modal">
-            <h2>Editar</h2>
+            <h2>Criar task</h2>
             <div className="box">
               <label>Nome</label>
               <input

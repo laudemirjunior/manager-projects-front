@@ -35,6 +35,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      .name-project {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+      }
       .header-right {
         display: flex;
         justify-content: space-between;
@@ -67,6 +73,11 @@
         }
         .gray-item {
           color: gray;
+        }
+        .button-delete {
+          cursor: pointer;
+          color: blue;
+          font-weight: 400;
         }
       }
     }

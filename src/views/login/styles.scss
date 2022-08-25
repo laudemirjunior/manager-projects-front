@@ -19,14 +19,13 @@
   }
   form {
     padding: 10px;
-    margin: 50px;
+    margin: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     height: 350px;
     width: 400px;
-    backdrop-filter: blur(5px);
     background-color: rgba(255, 255, 255, 1);
     border-radius: 20px;
     box-shadow: 35px 35px 68px 0px rgba(145, 192, 255, 0.5),

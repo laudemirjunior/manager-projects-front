@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import api from "../services";
 import { UseUser } from "./user";
@@ -22,6 +16,8 @@ interface DataProjectContext {
   projects: DataProject[];
   createProject: (name: string) => Promise<void>;
   deleteProject: (id: string) => void;
+  editProject: (name: string, id: string) => Promise<void>;
+  getProject: () => Promise<void>;
 }
 
 const ProjectContext = createContext<DataProjectContext>(
@@ -39,16 +35,16 @@ const ProjectProvider = ({ children }: ProviderProps) => {
       .then((res) => setProjects(res.data))
       .catch(() => setToken(""));
 
-  useEffect(() => {
-    if (projects.length === 0) {
-      getProject();
-    }
-  }, [token]);
-
   const createProject = (name: string) =>
     api
       .post("/project", { name: name }, headers)
       .then((res) => setProjects([...projects, res.data]))
+      .catch((err) => alert(err));
+
+  const editProject = (name: string, id: string) =>
+    api
+      .patch(`/project/${id}`, { name: name }, headers)
+      .then((res) => {})
       .catch((err) => alert(err));
 
   const deleteProject = (id: string) =>
@@ -61,7 +57,15 @@ const ProjectProvider = ({ children }: ProviderProps) => {
       .catch((err) => alert(err));
 
   return (
-    <ProjectContext.Provider value={{ projects, createProject, deleteProject }}>
+    <ProjectContext.Provider
+      value={{
+        projects,
+        createProject,
+        deleteProject,
+        editProject,
+        getProject,
+      }}
+    >
       {children}
     </ProjectContext.Provider>
   );

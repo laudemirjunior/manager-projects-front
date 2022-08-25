@@ -1,14 +1,25 @@
+import { useEffect } from "react";
 import Menu from "../../components/menu";
 import { UseProject } from "../../context/project";
 import { UseUser } from "../../context/user";
 import "./styles.scss";
 
 export default function Dashboard() {
-  const { user } = UseUser();
-  const { projects } = UseProject();
+  const { user, token, getUser } = UseUser();
+  const { projects, getProject } = UseProject();
+
+  useEffect(() => {
+    if (projects.length === 0) {
+      getProject();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="container-dashboard-general">
       <div className="menu">
         <Menu />
       </div>
