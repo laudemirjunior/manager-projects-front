@@ -104,4 +104,4 @@ function UseUser() {
   return context;
 }
 
-export { UserProvider, UseUser };
+export { UserProvider, UserContext, UseUser };

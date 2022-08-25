@@ -19,7 +19,7 @@ export default function ModalConfirmeDelete({
       {show && (
         <div className="container-modalCreateProject">
           <div className="modal">
-            <h2>Conformar exclusão</h2>
+            <h2>Confirmar exclusão</h2>
             <div className="box">
               <p>{text}</p>
             </div>

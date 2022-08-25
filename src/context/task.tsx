@@ -91,4 +91,4 @@ function UseTask() {
   return context;
 }
 
-export { TaskProvider, UseTask };
+export { TaskProvider, TaskContext, UseTask };

@@ -77,4 +77,4 @@ function UseProject() {
   return context;
 }
 
-export { ProjectProvider, UseProject };
+export { ProjectProvider, ProjectContext, UseProject };
