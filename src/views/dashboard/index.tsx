@@ -9,14 +9,12 @@ export default function Dashboard() {
   const { projects, getProject } = UseProject();
 
   useEffect(() => {
-    if (projects.length === 0) {
-      getProject();
-    }
+    getProject();
   }, [token]);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [token]);
 
   return (
     <div className="container-dashboard-general">

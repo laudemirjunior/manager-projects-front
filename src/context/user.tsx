@@ -25,7 +25,7 @@ interface PatchUser {
 
 interface DataUserContext {
   login: (data: LoginUser) => Promise<void>;
-  register: (data: RegisterUser) => Promise<void>;
+  registerUser: (data: RegisterUser) => Promise<void>;
   getUser: () => Promise<void>;
   patchUser: (data: PatchUser) => Promise<void>;
   token: string;
@@ -62,9 +62,9 @@ const UserProvider = ({ children }: ProviderProps) => {
       })
       .catch((err) => alert(err));
 
-  const register = () =>
+  const registerUser = (data: RegisterUser) =>
     api
-      .post("/user/register")
+      .post("/user/register", data)
       .then((res) => navigate("/login"))
       .catch((err) => alert(err));
 
@@ -84,7 +84,7 @@ const UserProvider = ({ children }: ProviderProps) => {
     <UserContext.Provider
       value={{
         login,
-        register,
+        registerUser,
         getUser,
         patchUser,
         token,

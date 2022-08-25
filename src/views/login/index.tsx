@@ -67,7 +67,7 @@ export default function Login() {
           </div>
           <Button name={"Entrar"} type="submit" />
           <p>
-            Já possui conta?{" "}
+            Não possui conta?{" "}
             <span onClick={() => navigate("/register")}>Cadastre-se</span>
           </p>
         </form>

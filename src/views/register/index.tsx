@@ -6,17 +6,19 @@ import RegisterImage from "../../assets/undraw_sign_in_re_o58h.svg";
 import Bar from "../../components/bar";
 import Button from "../../components/button";
 import Footer from "../../components/footer";
+import { UseUser } from "../../context/user";
 import "./styles.scss";
 
 interface PropsUserRegister {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 export default function Register() {
   const navigate = useNavigate();
+  const { registerUser } = UseUser();
 
   const Schema = yup.object().shape({
     name: yup.string().required("Nome Obrigatório"),
@@ -38,7 +40,10 @@ export default function Register() {
     resolver: yupResolver(Schema),
   });
 
-  function onSubmitFunction(data: PropsUserRegister) {}
+  function onSubmitFunction(data: PropsUserRegister) {
+    delete data.confirmPassword;
+    registerUser(data);
+  }
 
   return (
     <>
@@ -46,7 +51,7 @@ export default function Register() {
       <div className="container-register">
         <form onSubmit={handleSubmit(onSubmitFunction as () => void)}>
           <div>
-            <h1>Registrar</h1>
+            <h1>Cadastrar</h1>
           </div>
           <div className="box-email">
             <label>Nome</label>
@@ -88,9 +93,9 @@ export default function Register() {
               </p>
             )}
           </div>
-          <Button name={"Entrar"} type="submit" />
+          <Button name={"Cadastrar"} type="submit" />
           <p>
-            Não possui conta?{" "}
+            Já possui conta?{" "}
             <span onClick={() => navigate("/login")}>Entrar</span>
           </p>
         </form>
